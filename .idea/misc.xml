@@ -3,11 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/aadit/OneDrive/Desktop/Travel-App-with-SQL-master/app/src/main/res/layout/activity_add_wisata.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/aadit/OneDrive/Desktop/Travel-App-with-SQL-master/app/src/main/res/layout/activity_edit_user.xml" value="0.264" />
         <entry key="..\:/Users/aadit/OneDrive/Desktop/Travel-App-with-SQL-master/app/src/main/res/layout/activity_forgot_pass.xml" value="0.24722222222222223" />
         <entry key="..\:/Users/aadit/OneDrive/Desktop/Travel-App-with-SQL-master/app/src/main/res/layout/activity_login_page.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/aadit/OneDrive/Desktop/Travel-App-with-SQL-master/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/aadit/OneDrive/Desktop/Travel-App-with-SQL-master/app/src/main/res/layout/activity_receipt.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/aadit/OneDrive/Desktop/Travel-App-with-SQL-master/app/src/main/res/layout/activity_sign_up.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/aadit/OneDrive/Desktop/Travel-App-with-SQL-master/app/src/main/res/layout/activity_tickets.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/aadit/OneDrive/Desktop/Travel-App-with-SQL-master/app/src/main/res/layout/activity_tour_detail.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/aadit/OneDrive/Desktop/Travel-App-with-SQL-master/app/src/main/res/layout/activity_update_delete_wisata.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/aadit/OneDrive/Desktop/Travel-App-with-SQL-master/app/src/main/res/layout/desain_dashboard_adapter.xml" value="0.25416666666666665" />
         <entry key="..\:/dinus/S5/AS/TravelApp/app/src/main/res/drawable-anydpi/ic_loc.xml" value="0.18294314381270904" />

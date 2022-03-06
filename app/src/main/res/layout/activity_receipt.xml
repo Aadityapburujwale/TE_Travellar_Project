@@ -42,7 +42,7 @@
             android:scaleType="centerCrop" />
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/blue"
@@ -283,5 +283,5 @@
                 android:textSize="18dp"
                 android:textStyle="bold" />
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

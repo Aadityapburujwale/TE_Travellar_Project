@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,16 +32,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
-public class TourDetail extends AppCompatActivity {
+public class TourDetail extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://travellapplication-default-rtdb.firebaseio.com/Users");
     SharedPreferences localStore;
 
     ImageView imgTour;
     TextView nameTour, descTour, priceTour, txtCount;
-    Button addCount, subCount, btnPay;
+    Button addCount, subCount, btnPay, select_date_btn;
     ImageButton btnLoc;
     int mCount=1;
 
@@ -68,12 +71,18 @@ public class TourDetail extends AppCompatActivity {
         subCount = findViewById(R.id.btn_subCount);
         btnPay = findViewById(R.id.btn_pay);
         btnLoc = findViewById(R.id.btn_img_loc);
+        select_date_btn = findViewById(R.id.select_date_btn);
 
         localStore = getSharedPreferences("loginState", MODE_PRIVATE);
-
         txtCount.setText(Integer.toString(mCount));
-
         getDataAdapter();
+
+        select_date_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker();
+            }
+        });
 
         addCount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +114,13 @@ public class TourDetail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                String date = select_date_btn.getText().toString();
+                if(date.length()!=10){
+                    select_date_btn.setError("Select Data");
+                    Toast.makeText(TourDetail.this,"Select Tour Date",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 int price_tour = getIntent().getIntExtra("priceTour", 0);
                 int tourPrice = price_tour;
                 String tourImageURL = getIntent().getStringExtra("imgTour");
@@ -122,9 +138,9 @@ public class TourDetail extends AppCompatActivity {
 
                 String userName = localStore.getString("UserName", "NA");
 
-                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
-                Date date = new Date();
-                String currentDate = dateFormat.format(date);
+//                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
+//                Date date = new Date();
+//                String currentDate = dateFormat.format(date);
                 // Log.d("DATE PRO", String.valueOf(date.getTime()));
 
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
@@ -135,7 +151,7 @@ public class TourDetail extends AppCompatActivity {
                             databaseReference.child(userName).child("Tickets_Details").child("Total_Tickets").setValue(totalTickets);
                             databaseReference.child(userName).child("Tickets_Details").child("Tour_Price").setValue(tourPrice);
                             databaseReference.child(userName).child("Tickets_Details").child("Total_Tickect_Price").setValue(totalTicketsPrice);
-                            databaseReference.child(userName).child("Tickets_Details").child("Tour_Date").setValue(currentDate);
+                            databaseReference.child(userName).child("Tickets_Details").child("Tour_Date").setValue(date);
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
@@ -184,5 +200,22 @@ public class TourDetail extends AppCompatActivity {
         nameTour.setText(name_tour);
         descTour.setText(desc_tour);
         priceTour.setText(Integer.toString(price_tour));
+    }
+
+    void showDatePicker(){
+        DatePickerDialog datePicker = new DatePickerDialog(
+                TourDetail.this,
+                this,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        );
+        datePicker.show();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        String date = String.format("%02d-%02d-%d",dayOfMonth,month+1,year);
+        select_date_btn.setText(date);
     }
 }

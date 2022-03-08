@@ -20,14 +20,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Tickets extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://travellapplication-default-rtdb.firebaseio.com/Users");
 
 
-    TextView name, email, phone, nameTour, totalPeople, totalPrice, tour_date;
+    TextView name, email, phone, nameTour, totalPeople, totalPrice, tour_date, expiry_view;
     Button btnBack;
     AlertDialog dialog;
 
@@ -53,6 +56,7 @@ public class Tickets extends AppCompatActivity {
         totalPrice = findViewById(R.id.total_price);
         btnBack = findViewById(R.id.btn_back);
         tour_date = findViewById(R.id.tour_date);
+        expiry_view  = findViewById(R.id.expiry_tv);
 
         preferences = getSharedPreferences("userInfo", 0);
 
@@ -95,6 +99,15 @@ public class Tickets extends AppCompatActivity {
                 totalPeople.setText(totalItemsView);
                 totalPrice.setText("Rs." + totalPriceView);
                 tour_date.setText(tourDate);
+
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
+                Date currentDate = new Date();
+                String curr_day_month_year = dateFormat.format(currentDate);
+
+                // Tour Date is less than current date. (Tickect Expired)
+                if(tourDate.compareTo(curr_day_month_year)<0){
+                    expiry_view.setVisibility(View.VISIBLE);
+                }
 
             }
             @Override

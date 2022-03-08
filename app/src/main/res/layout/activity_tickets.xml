@@ -74,6 +74,20 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/expiry_tv"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/info_icon"
+                android:text=" This ticket is expired!"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="#F44336"
+                android:layout_margin="5dp"
+                android:fontFamily="sans-serif-black"/>
+
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tour Details"

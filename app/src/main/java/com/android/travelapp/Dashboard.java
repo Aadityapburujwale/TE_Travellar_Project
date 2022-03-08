@@ -7,13 +7,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,14 +24,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.auth.User;
 
 import java.util.ArrayList;
 
 public class Dashboard extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://travellapplication-default-rtdb.firebaseio.com");
-
+    SharedPreferences localStore;
 
     TextView txtName, txtEmail;
     Button checkTickets;
@@ -47,7 +44,7 @@ public class Dashboard extends AppCompatActivity {
     private ArrayList<Integer> al_price_tour = new ArrayList<>();
     private ArrayList<String> al_location = new ArrayList<>();
 
-    SharedPreferences preferences;
+    SharedPreferences Oldpreferences;
 
     private static final String KEY_NAME = "name";
     private static final String KEY_EMAIL = "email";
@@ -70,38 +67,49 @@ public class Dashboard extends AppCompatActivity {
         checkTickets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String nameView = preferences.getString(KEY_NAME, null);
-                String emailView = preferences.getString(KEY_EMAIL, null);
-                String phoneView = preferences.getString(KEY_PHONE, null);
+//                String nameView = Oldpreferences.getString(KEY_NAME, null);
+//                String emailView = Oldpreferences.getString(KEY_EMAIL, null);
+//                String phoneView = Oldpreferences.getString(KEY_PHONE, null);
+//
+//                String nameTourView = Oldpreferences.getString(KEY_NAME_TOUR, null);
+//                String totalItemsView = Oldpreferences.getString(KEY_COUNT_ITEMS, null);
+//                String totalPriceView = Oldpreferences.getString(KEY_TOTAL_PRICE, null);
 
-                String nameTourView = preferences.getString(KEY_NAME_TOUR, null);
-                String totalItemsView = preferences.getString(KEY_COUNT_ITEMS, null);
-                String totalPriceView = preferences.getString(KEY_TOTAL_PRICE, null);
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        //databaseReference.child(userName).child("Tickets_Details").child("Tour_IMG_URL").setValue(tourImageURL);
+                        String user_Name = localStore.getString("UserName", "NA");
+                        if (snapshot.child("Users").child(user_Name).hasChild("Tickets_Details")) {
+                            Intent intent = new Intent(Dashboard.this, Tickets.class);
+                            startActivity(intent);
+                        } else {
+                            AlertDialog dialog = new AlertDialog.Builder(Dashboard.this)
+                                    .setTitle("Check Tickets")
+                                    .setMessage("\nData is Empty")
+                                    .setIcon(android.R.drawable.ic_dialog_info)
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            Intent intent = new Intent(Dashboard.this, Dashboard.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    }).show();
+                        }
 
-                if (nameView == "" || emailView == "" || phoneView == "" || nameTourView == "" || totalItemsView == "" || totalPriceView == "" ||
-                        nameView == null || emailView == null || phoneView == null || nameTourView == null || totalItemsView == null || totalPriceView == null) {
-                    AlertDialog dialog = new AlertDialog.Builder(Dashboard.this)
-                            .setTitle("Check Tickets")
-                            .setMessage("\nData is Empty")
-                            .setIcon(android.R.drawable.ic_dialog_info)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    Intent intent = new Intent(Dashboard.this, Dashboard.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            }).show();
-                } else if (nameView == nameView || emailView == emailView || phoneView == phoneView || nameTourView == nameTourView || totalItemsView == totalItemsView || totalPriceView == totalPriceView) {
-                    Intent intent = new Intent(Dashboard.this, Tickets.class);
-                    startActivity(intent);
-                }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
             }
         });
 
-        preferences = getSharedPreferences("userInfo", 0);
-
-        SharedPreferences localStore = getSharedPreferences("loginState", MODE_PRIVATE);
+        Oldpreferences = getSharedPreferences("userInfo", 0);
+        localStore = getSharedPreferences("loginState", MODE_PRIVATE);
 
         String namaView = localStore.getString("UserName", "NA");
         String emailView = localStore.getString("Email", "NA");
@@ -160,11 +168,11 @@ public class Dashboard extends AppCompatActivity {
         alertDialog = new AlertDialog.Builder(Dashboard.this)
                 .setIcon(android.R.drawable.ic_dialog_dialer)
                 .setTitle("Call Center")
-                .setMessage("\n082139860827")
+                .setMessage("\n+91 9834 320 324")
                 .setNeutralButton("Call", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Uri uri = Uri.parse("082139860827");
+                        Uri uri = Uri.parse("919834320324");
                         Intent intent = new Intent(Intent.ACTION_DIAL, uri);
                         intent.setData(Uri.fromParts("tel", String.valueOf(uri), null));
 
@@ -180,12 +188,12 @@ public class Dashboard extends AppCompatActivity {
         alertDialog = new AlertDialog.Builder(Dashboard.this)
                 .setIcon(android.R.drawable.ic_dialog_email)
                 .setTitle("Email")
-                .setMessage("\nfihdanps@gmail.com")
+                .setMessage("\nA@ditya.ml")
                 .setNeutralButton("Go to Email", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent(Intent.ACTION_SEND );
-                        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"fihdanps@gmail.com"});
+                        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"A@ditya.ml"});
                         intent.putExtra(Intent.EXTRA_SUBJECT , "TES DULS YE BANG");
                         intent.putExtra(Intent.EXTRA_TEXT , "Travel App");
                         intent.setType("message/rfc822");
@@ -215,8 +223,8 @@ public class Dashboard extends AppCompatActivity {
                 .show();
 
     }
+
     private void editUser(){
-        SharedPreferences localStore = getSharedPreferences("loginState",MODE_PRIVATE);
         String userName = localStore.getString("UserName","NA");
 
         Intent intent = new Intent(Dashboard.this, EditUser.class);
@@ -225,7 +233,6 @@ public class Dashboard extends AppCompatActivity {
 
     }
     private void getLogout(){
-        SharedPreferences localStore = getSharedPreferences("loginState", MODE_PRIVATE);
         localStore.edit().clear().apply();
         Intent intent = new Intent(Dashboard.this, LoginPage.class);
         startActivity(intent);
@@ -251,7 +258,6 @@ public class Dashboard extends AppCompatActivity {
                     al_location.add(placeLocation);
 
                 }
-                Log.d("Testing",al_desc_tour.size()+"");
                 RecycleViewAdapterProcess();
             }
 

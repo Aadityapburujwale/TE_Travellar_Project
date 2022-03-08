@@ -1,5 +1,6 @@
 package com.android.travelapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -23,8 +24,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Receipt extends AppCompatActivity {
+
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://travellapplication-default-rtdb.firebaseio.com/Users");
+
+
     ImageView imgTour;
     TextView nameTour, totalPeople, priceTour, totalPrice, name, email, phone;
     Button btnConfirm;
@@ -75,9 +85,9 @@ public class Receipt extends AppCompatActivity {
             email.setText(emailView);
             phone.setText(phoneView);
             nameTour.setText(nameTourView);
-            priceTour.setText("Rp"+priceView);
+            priceTour.setText("Rs"+priceView);
             totalPeople.setText(totalItemsView + " Orang");
-            totalPrice.setText("Rp"+totalPriceView);
+            totalPrice.setText("Rs"+totalPriceView);
         }
 
         btnConfirm.setOnClickListener(new View.OnClickListener() {
@@ -91,27 +101,6 @@ public class Receipt extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Toast.makeText(Receipt.this, "Success Booked Ticket", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(Receipt.this, Receipt.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                PendingIntent pendingIntent = PendingIntent.getActivity(Receipt.this, 0, intent, 0);
-
-                                NotificationCompat.Builder builder = new NotificationCompat.Builder(Receipt.this, CHANNEL_ID)
-                                        .setSmallIcon(R.drawable.ic_ticket)
-                                        .setContentTitle("Detail Ticket")
-                                        .setStyle(new NotificationCompat.BigTextStyle()
-                                                .bigText("\nYour Ticket Successfully Booked!\n" +
-                                                        "=====================================" + "\n" +
-                                                        "Nama Pemesan\t: "+nameView+ "\n" +
-                                                        "Nama Tempat\t: "+nameTourView+ "\n" +
-                                                        "Total Orang\t: "+totalItemsView+ "\n" +
-                                                        "Total Harga\t: Rp"+totalPriceView+ "\n" +
-                                                        "====================================="))
-                                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                                        // Set the intent that will fire when the user taps the notification
-                                        .setContentIntent(pendingIntent)
-                                        .setAutoCancel(true);
-                                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(Receipt.this);
-                                notificationManager.notify(25, builder.build());
                                 finish();
                             }
                         })
@@ -129,26 +118,26 @@ public class Receipt extends AppCompatActivity {
             }
         });
     }
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_desc);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
+
     private void resetDetailTour(){
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(KEY_NAME_TOUR, null);
-        editor.putString(KEY_COUNT_ITEMS, null);
-        editor.putString(KEY_TOTAL_PRICE, null);
-        editor.apply();
+//        SharedPreferences.Editor editor = preferences.edit();
+//        editor.putString(KEY_NAME_TOUR, null);
+//        editor.putString(KEY_COUNT_ITEMS, null);
+//        editor.putString(KEY_TOTAL_PRICE, null);
+//        editor.apply();
+        SharedPreferences localStore = getSharedPreferences("loginState", MODE_PRIVATE);
+        String userName = localStore.getString("UserName", "NA");
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                databaseReference.child(userName).child("Tickets_Details").removeValue();
+                }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 }

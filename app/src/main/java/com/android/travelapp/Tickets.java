@@ -1,5 +1,6 @@
 package com.android.travelapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,11 +14,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class Tickets extends AppCompatActivity {
-    TextView name, email, phone, nameTour, totalPeople, totalPrice;
+
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://travellapplication-default-rtdb.firebaseio.com/Users");
+
+
+    TextView name, email, phone, nameTour, totalPeople, totalPrice, tour_date;
     Button btnBack;
     AlertDialog dialog;
 
@@ -42,6 +52,7 @@ public class Tickets extends AppCompatActivity {
         totalPeople = findViewById(R.id.total_people);
         totalPrice = findViewById(R.id.total_price);
         btnBack = findViewById(R.id.btn_back);
+        tour_date = findViewById(R.id.tour_date);
 
         preferences = getSharedPreferences("userInfo", 0);
 
@@ -54,34 +65,43 @@ public class Tickets extends AppCompatActivity {
             }
         });
 
-        String nameView = preferences.getString(KEY_NAME, null);
-        String emailView = preferences.getString(KEY_EMAIL, null);
-        String phoneView = preferences.getString(KEY_PHONE, null);
+//        String nameView = preferences.getString(KEY_NAME, null);
+//        String emailView = preferences.getString(KEY_EMAIL, null);
+//        String phoneView = preferences.getString(KEY_PHONE, null);
+//
+//        String nameTourView = preferences.getString(KEY_NAME_TOUR, null);
+//        String totalItemsView = preferences.getString(KEY_COUNT_ITEMS, null);
+//        String totalPriceView = preferences.getString(KEY_TOTAL_PRICE, null);
 
-        String nameTourView = preferences.getString(KEY_NAME_TOUR, null);
-        String totalItemsView = preferences.getString(KEY_COUNT_ITEMS, null);
-        String totalPriceView = preferences.getString(KEY_TOTAL_PRICE, null);
+        SharedPreferences localStore = getSharedPreferences("loginState", MODE_PRIVATE);
+        String userName = localStore.getString("UserName", "NA");
 
-        if (nameView != null || emailView != null || phoneView != null || nameTourView != null || totalItemsView != null || totalPriceView != null) {
-            name.setText(nameView);
-            email.setText(emailView);
-            phone.setText(phoneView);
-            nameTour.setText(nameTourView);
-            totalPeople.setText(totalItemsView + " Orang");
-            totalPrice.setText("Rp" + totalPriceView);
-        } else {
-            dialog = new AlertDialog.Builder(Tickets.this)
-                    .setTitle("Check Tickets")
-                    .setMessage("Data is Empty")
-                    .setIcon(android.R.drawable.ic_dialog_info)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(Tickets.this, Dashboard.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    }).show();
-        }
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String nameView = snapshot.child(userName).child("Name").getValue(String.class);
+                String emailView = snapshot.child(userName).child("Email").getValue(String.class);
+                String phoneView = snapshot.child(userName).child("Mobile_No").getValue(String.class);
+
+                String nameTourView = snapshot.child(userName).child("Tickets_Details").child("Tour_Name").getValue(String.class);
+                String totalItemsView = snapshot.child(userName).child("Tickets_Details").child("Total_Tickets").getValue(String.class);
+                String totalPriceView = snapshot.child(userName).child("Tickets_Details").child("Total_Tickect_Price").getValue(String.class);
+                String tourDate = snapshot.child(userName).child("Tickets_Details").child("Tour_Date").getValue(String.class);
+
+                name.setText(nameView);
+                email.setText(emailView);
+                phone.setText(phoneView);
+                nameTour.setText(nameTourView);
+                totalPeople.setText(totalItemsView);
+                totalPrice.setText("Rs." + totalPriceView);
+                tour_date.setText(tourDate);
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 }

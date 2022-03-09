@@ -90,33 +90,21 @@ public class LoginPage extends AppCompatActivity {
                             if(snapshot.hasChild(userName)){
                                 final String getPassword = snapshot.child(userName).child("Password").getValue(String.class);
                                 final String hashedPassword = getMd5Hash(password);
+                                final String email = snapshot.child(userName).child("Email").getValue(String.class);
 
                                 if(getPassword.equals(hashedPassword)){
                                     showToast("Login Success!");
                                     goToAnotherScreen(Dashboard.class);
                                     localStore.edit().putBoolean("isLoggedIn",true).apply();
                                     localStore.edit().putString("UserName",userName).apply();
-                                    databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if(snapshot.hasChild(userName)){
-                                                String email = snapshot.child(userName).child("Email").getValue(String.class);
-                                                localStore.edit().putString("Email",email).apply();
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
+                                    localStore.edit().putString("Email",email).apply();
                                     finish();
                                 }else{
                                     showToast("Enter A Correct password.");
                                 }
 
                             }else{
-                                showToast("Entered Mobile No. is not registered.");
+                                showToast("Entered a valid UserName.");
                             }
                         }
 

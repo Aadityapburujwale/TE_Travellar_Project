@@ -1,16 +1,8 @@
 package com.android.travelapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,15 +43,6 @@ public class Dashboard extends AppCompatActivity {
     private ArrayList<Integer> al_price_tour = new ArrayList<>();
     private ArrayList<String> al_location = new ArrayList<>();
 
-    SharedPreferences Oldpreferences;
-
-    private static final String KEY_NAME = "name";
-    private static final String KEY_EMAIL = "email";
-    private static final String KEY_PHONE = "phone";
-    private static final String KEY_TOTAL_PRICE = "total_price";
-    private static final String KEY_NAME_TOUR = "name_tour";
-    private static final String KEY_COUNT_ITEMS = "count_items";
-
     private Toolbar toolbar;
 
     @Override
@@ -63,28 +53,31 @@ public class Dashboard extends AppCompatActivity {
         txtName = findViewById(R.id.tv_fullname);
         txtEmail = findViewById(R.id.tv_email);
         checkTickets = findViewById(R.id.check_ticket);
+        toolbar = findViewById(R.id.main_toolbar);
+
+        setSupportActionBar(toolbar);
+        localStore = getSharedPreferences("loginState", MODE_PRIVATE);
+
+        String nameView = localStore.getString("UserName", "NA");
+        String emailView = localStore.getString("Email", "NA");
+        txtName.setText(nameView);
+        txtEmail.setText(emailView);
+
+        getPlaces();
 
         checkTickets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String nameView = Oldpreferences.getString(KEY_NAME, null);
-//                String emailView = Oldpreferences.getString(KEY_EMAIL, null);
-//                String phoneView = Oldpreferences.getString(KEY_PHONE, null);
-//
-//                String nameTourView = Oldpreferences.getString(KEY_NAME_TOUR, null);
-//                String totalItemsView = Oldpreferences.getString(KEY_COUNT_ITEMS, null);
-//                String totalPriceView = Oldpreferences.getString(KEY_TOTAL_PRICE, null);
 
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        //databaseReference.child(userName).child("Tickets_Details").child("Tour_IMG_URL").setValue(tourImageURL);
                         String user_Name = localStore.getString("UserName", "NA");
                         if (snapshot.child("Users").child(user_Name).hasChild("Tickets_Details")) {
                             Intent intent = new Intent(Dashboard.this, Tickets.class);
                             startActivity(intent);
                         } else {
-                            AlertDialog dialog = new AlertDialog.Builder(Dashboard.this)
+                             alertDialog = new AlertDialog.Builder(Dashboard.this)
                                     .setTitle("Check Tickets")
                                     .setMessage("\nData is Empty")
                                     .setIcon(android.R.drawable.ic_dialog_info)
@@ -107,22 +100,6 @@ public class Dashboard extends AppCompatActivity {
 
             }
         });
-
-        Oldpreferences = getSharedPreferences("userInfo", 0);
-        localStore = getSharedPreferences("loginState", MODE_PRIVATE);
-
-        String namaView = localStore.getString("UserName", "NA");
-        String emailView = localStore.getString("Email", "NA");
-
-        if (namaView != null || emailView != null) {
-            txtName.setText(namaView);
-            txtEmail.setText(emailView);
-        }
-
-        getPlaces();
-
-        toolbar = findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
     }
 
     private void RecycleViewAdapterProcess() {
@@ -144,15 +121,6 @@ public class Dashboard extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.bar_call_center:
-                callCenter();
-                return true;
-            case R.id.bar_email:
-                emailCenter();
-                return true;
-            case R.id.bar_loc:
-                getLoc();
-                return true;
             case R.id.bar_edit_user:
                 editUser();
                 return true;
@@ -162,66 +130,6 @@ public class Dashboard extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void callCenter() {
-        alertDialog = new AlertDialog.Builder(Dashboard.this)
-                .setIcon(android.R.drawable.ic_dialog_dialer)
-                .setTitle("Call Center")
-                .setMessage("\n+91 9834 320 324")
-                .setNeutralButton("Call", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Uri uri = Uri.parse("919834320324");
-                        Intent intent = new Intent(Intent.ACTION_DIAL, uri);
-                        intent.setData(Uri.fromParts("tel", String.valueOf(uri), null));
-
-                        if (intent.resolveActivity(getPackageManager()) != null){
-                            startActivity(intent);
-                        }
-                    }
-                })
-                .show();
-
-    }
-    private void emailCenter(){
-        alertDialog = new AlertDialog.Builder(Dashboard.this)
-                .setIcon(android.R.drawable.ic_dialog_email)
-                .setTitle("Email")
-                .setMessage("\nA@ditya.ml")
-                .setNeutralButton("Go to Email", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(Intent.ACTION_SEND );
-                        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"A@ditya.ml"});
-                        intent.putExtra(Intent.EXTRA_SUBJECT , "TES DULS YE BANG");
-                        intent.putExtra(Intent.EXTRA_TEXT , "Travel App");
-                        intent.setType("message/rfc822");
-                        startActivity(Intent.createChooser(intent , "Choose Your Apps : "));
-                    }
-                })
-                .show();
-
-    }
-    private void getLoc(){
-        alertDialog = new AlertDialog.Builder(Dashboard.this)
-                .setIcon(android.R.drawable.ic_dialog_info)
-                .setTitle("Location")
-                .setMessage("\nKota Madiun, Jawa Timur")
-                .setNeutralButton("Go to Location", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Uri uri2 = Uri.parse("geo:0,0?q="+"Kota Madiun, Jawa Timur");
-                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri2);
-                        mapIntent.setPackage("com.google.android.apps.maps");
-
-                        if(mapIntent.resolveActivity(getPackageManager()) != null){
-                            startActivity(mapIntent);
-                        }
-                    }
-                })
-                .show();
-
     }
 
     private void editUser(){

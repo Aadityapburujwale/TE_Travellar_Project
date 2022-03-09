@@ -2,11 +2,7 @@
     <string name="app_name">Travel App</string>
 
     <string name="nameApp">Travel App</string>
-    <string name="subtitleNameApp">Tempellmahbang Tourist Village</string>
-    <string name="versionApp">v2.6</string>
-    <string name="copyright">Copyright © 2021 Nadhif Pamungkas</string>
-    <string name="titleLogin">Welcome to Tempellmahbang</string>
-
-    <string name="channel_name">Travel App v2.6 (BETA)</string>
-    <string name="channel_desc">Application Travel Indonesia</string>
+    <string name="subtitleNameApp">Welcome To Travel App</string>
+    <string name="versionApp">v1.0</string>
+    <string name="titleLogin">Welcome to Travel App</string>
 </resources>

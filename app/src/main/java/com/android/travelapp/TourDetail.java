@@ -1,19 +1,11 @@
 package com.android.travelapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -22,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,11 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class TourDetail extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
@@ -47,8 +39,6 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
     int mCount=1;
 
 
-//    SharedPreferences preferences;
-
     private static final String KEY_IMG_TOUR = "img_tour";
     private static final String KEY_TOTAL_PRICE = "total_price";
     private static final String KEY_NAME_TOUR = "name_tour";
@@ -60,7 +50,6 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tour_detail);
-//        preferences = getSharedPreferences("userInfo", 0);
 
         imgTour = findViewById(R.id.img_tour);
         nameTour = findViewById(R.id.name_tour);
@@ -128,20 +117,7 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
                 String totalTickets = txtCount.getText().toString();
                 String totalTicketsPrice = priceTour.getText().toString();
 
-//                SharedPreferences.Editor editor = preferences.edit();
-//                editor.putString(KEY_IMG_TOUR, imageValue);
-//                editor.putString(KEY_NAME_TOUR, nameTourValue);
-//                editor.putString(KEY_COUNT_ITEMS, totalItemsValue);
-//                editor.putString(KEY_PRICE_TOUR, String.valueOf(priceValue));
-//                editor.putString(KEY_TOTAL_PRICE, totalPriceValue);
-//                editor.apply();
-
                 String userName = localStore.getString("UserName", "NA");
-
-//                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
-//                Date date = new Date();
-//                String currentDate = dateFormat.format(date);
-                // Log.d("DATE PRO", String.valueOf(date.getTime()));
 
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener(){
                     @Override

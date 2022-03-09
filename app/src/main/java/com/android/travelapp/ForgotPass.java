@@ -39,7 +39,6 @@ public class ForgotPass extends AppCompatActivity {
             public void onClick(View view) {
                 String userName = inpUser.getEditText().getText().toString();
 
-
                 databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -54,7 +53,7 @@ public class ForgotPass extends AppCompatActivity {
                             startActivity(intent);
 
                         }else{
-                            showToast("Username or Email not Found");
+                            showToast("Username not Found in database.");
                         }
                     }
 

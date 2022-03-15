@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/aliey_regular"
             android:text="Receipt"
-            android:textColor="@color/bgColorSplash"
+            android:textColor="#ECD50E"
             android:textSize="40dp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:background="@color/blue"
+        android:background="#B5D2FD"
         android:padding="10dp"
         android:orientation="vertical">
 
@@ -45,7 +45,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/blue"
+        android:background="#B5D2FD"
         android:orientation="vertical">
 
         <LinearLayout
@@ -67,7 +67,7 @@
                     android:text="Detail User"
                     android:textSize="20dp"
                     android:fontFamily="sans-serif-black"
-                    android:textColor="@color/white"/>
+                    android:textColor="#1A237E"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -87,7 +87,7 @@
                         android:layout_marginBottom="10dp"
                         android:fontFamily="sans-serif"
                         android:text="Name"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                     <TextView
@@ -96,7 +96,7 @@
                         android:layout_marginBottom="10dp"
                         android:fontFamily="sans-serif"
                         android:text="Email"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                     <TextView
@@ -104,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
                         android:text="Phone"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
                 </LinearLayout>
 
@@ -121,7 +121,7 @@
                         android:layout_marginBottom="10dp"
                         android:fontFamily="sans-serif-black"
                         android:text="Name"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                     <TextView
@@ -131,7 +131,7 @@
                         android:layout_marginBottom="10dp"
                         android:fontFamily="sans-serif-black"
                         android:text="Email"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                     <TextView
@@ -140,7 +140,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-black"
                         android:text="Phone"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
                 </LinearLayout>
             </LinearLayout>
@@ -158,7 +158,7 @@
                     android:text="Detail Tour"
                     android:textSize="20dp"
                     android:fontFamily="sans-serif-black"
-                    android:textColor="@color/white"/>
+                    android:textColor="#1A237E"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -178,7 +178,7 @@
                         android:layout_marginBottom="10dp"
                         android:fontFamily="sans-serif"
                         android:text="Name Tour"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                     <TextView
@@ -187,7 +187,7 @@
                         android:layout_marginBottom="10dp"
                         android:fontFamily="sans-serif"
                         android:text="Total People"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                     <TextView
@@ -195,7 +195,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
                         android:text="Price Tour"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
                 </LinearLayout>
 
@@ -212,7 +212,7 @@
                         android:layout_marginBottom="10dp"
                         android:fontFamily="sans-serif-black"
                         android:text="Name Tour"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                     <TextView
@@ -222,7 +222,7 @@
                         android:layout_marginBottom="10dp"
                         android:fontFamily="sans-serif-black"
                         android:text="Total People"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                     <TextView
@@ -231,7 +231,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-black"
                         android:text="Price Tour"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
                 </LinearLayout>
             </LinearLayout>
@@ -252,7 +252,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
                         android:text="Total"
-                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textColor="#4A148C"
                         android:textSize="15dp" />
                 </LinearLayout>
 
@@ -268,7 +269,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-black"
                         android:text="Total Price"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
                 </LinearLayout>
             </LinearLayout>
@@ -277,9 +278,9 @@
                 android:id="@+id/btn_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/green"
+                android:backgroundTint="#1A237E"
                 android:text="CONFIRM"
-                android:textColor="@color/white"
+                android:textColor="#F4FB03"
                 android:textSize="18dp"
                 android:textStyle="bold" />
         </LinearLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#FDEDBC"
     android:orientation="vertical"
     tools:context=".TourDetail">
 
@@ -104,7 +104,7 @@
                         android:id="@+id/btn_subCount"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:backgroundTint="@color/bgColorSplash"
+                        android:backgroundTint="#FF9300"
                         android:text="─"
                         android:textColor="@color/black"
                         android:textSize="20dp"
@@ -125,7 +125,7 @@
                         android:id="@+id/btn_addCount"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:backgroundTint="@color/bgColorSplash"
+                        android:backgroundTint="#47FF00"
                         android:text="＋"
                         android:textColor="@color/black"
                         android:textSize="20dp"
@@ -137,9 +137,10 @@
                         android:text="Select Tour Date"
                         android:layout_marginLeft="10dp"
                         android:textSize="16sp"
+                        android:shadowRadius="10"
                         android:padding="5dp"
                         android:textStyle="bold"
-                        android:backgroundTint="#F8025A"/>
+                        android:backgroundTint="#02EEF8"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -169,10 +170,10 @@
                     android:id="@+id/btn_pay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/blue"
+                    android:backgroundTint="#1A237E"
                     android:text="Pay"
                     android:textStyle="bold"
-                    android:textColor="@color/white"
+                    android:textColor="#FFF200"
                     android:textSize="18dp" />
             </LinearLayout>
         </LinearLayout>

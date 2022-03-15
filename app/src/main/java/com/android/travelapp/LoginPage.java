@@ -51,7 +51,7 @@ public class LoginPage extends AppCompatActivity {
 
         // --> Check User Is Already Logged In.
         if(localStore.getBoolean("isLoggedIn",false)){
-            goToAnotherScreen(Dashboard.class);
+            goToAnotherScreen(home.class);
             finish();
         }
         // *** Check User Is Already Logged In. <--
@@ -94,7 +94,7 @@ public class LoginPage extends AppCompatActivity {
 
                                 if(getPassword.equals(hashedPassword)){
                                     showToast("Login Success!");
-                                    goToAnotherScreen(Dashboard.class);
+                                    goToAnotherScreen(home.class);
                                     localStore.edit().putBoolean("isLoggedIn",true).apply();
                                     localStore.edit().putString("UserName",userName).apply();
                                     localStore.edit().putString("Email",email).apply();

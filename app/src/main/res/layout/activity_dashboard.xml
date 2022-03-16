@@ -81,7 +81,7 @@
                 android:fontFamily="sans-serif-black"
                 android:textColor="@color/blue"
                 android:drawableLeft="@drawable/ic_ticket"
-                android:textSize="14dp"/>
+                android:textSize="13dp"/>
 
         </LinearLayout>
     </LinearLayout>

@@ -29,13 +29,13 @@ public class home extends AppCompatActivity{
             }
         });
 
-        weather_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(home.this, Weather_details.class);
-                startActivity(intent);
-            }
-        });
+//        weather_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(home.this, Weather_details.class);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 

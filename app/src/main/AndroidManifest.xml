@@ -19,9 +19,6 @@
             android:name=".home"
             android:exported="false" />
         <activity
-            android:name=".Weather_details"
-            android:exported="false" />
-        <activity
             android:name=".Tickets"
             android:exported="false" />
         <activity

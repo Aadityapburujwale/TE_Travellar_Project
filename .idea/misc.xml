@@ -6,10 +6,15 @@
         <entry key="..\:/Users/aadit/Downloads/TE_Travellar_Project-master (2)/TE_Travellar_Project-master/app/src/main/res/layout/activity_dashboard.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/aadit/Downloads/TE_Travellar_Project-master (2)/TE_Travellar_Project-master/app/src/main/res/layout/activity_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/aadit/Downloads/TE_Travellar_Project-master (2)/TE_Travellar_Project-master/app/src/main/res/layout/activity_sign_up.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/aadit/OneDrive/Desktop/Travel-App/app/src/main/res/layout/activity_chat_bot_screen.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/aadit/OneDrive/Desktop/Travel-App/app/src/main/res/layout/activity_weather_details.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/aadit/OneDrive/Desktop/Travel-App/app/src/main/res/layout/bot_chat_adapter_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/aadit/OneDrive/Desktop/Travel-App/app/src/main/res/layout/chatbot_adapter_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/aadit/OneDrive/Desktop/Travel-App/app/src/main/res/layout/desain_dashboard_adapter.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

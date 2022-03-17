@@ -3,10 +3,7 @@
     package="com.android.travelapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <application
         android:allowBackup="true"
@@ -18,36 +15,47 @@
         <activity
             android:name=".ChatBotScreen"
             android:exported="false" />
+
         <activity
             android:name=".home"
             android:exported="false" />
+
         <activity
             android:name=".Tickets"
             android:exported="false" />
+
         <activity
             android:name=".Receipt"
             android:exported="false" />
+
         <activity
             android:name=".ForgotPass"
             android:exported="false" />
+
         <activity
             android:name=".EditUser"
             android:exported="false" />
+
         <activity
             android:name=".TourDetail"
             android:exported="false" />
+
         <activity
             android:name=".Dashboard"
             android:exported="false" />
+
         <activity
             android:name=".SignUp"
             android:exported="false" />
+
         <activity
             android:name=".LoginPage"
             android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

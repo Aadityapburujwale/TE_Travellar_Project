@@ -38,14 +38,6 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
     ImageButton btnLoc;
     int mCount=1;
 
-
-    private static final String KEY_IMG_TOUR = "img_tour";
-    private static final String KEY_TOTAL_PRICE = "total_price";
-    private static final String KEY_NAME_TOUR = "name_tour";
-    private static final String KEY_LOC = "loc_tour";
-    private static final String KEY_COUNT_ITEMS = "count_items";
-    private static final String KEY_PRICE_TOUR = "price_tour";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,8 +128,10 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
                 });
 
                 Intent intent = new Intent(TourDetail.this, Receipt.class);
+                intent.putExtra("userName",userName);
                 startActivity(intent);
                 finish();
+
             }
         });
 

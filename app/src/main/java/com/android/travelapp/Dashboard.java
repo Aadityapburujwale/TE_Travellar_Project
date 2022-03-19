@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +38,8 @@ public class Dashboard extends AppCompatActivity {
     AlertDialog alertDialog;
     MenuInflater inflater;
 
+    SearchView searchView;
+
     private ArrayList<String> al_img_tour = new ArrayList<>();
     private ArrayList<String> al_name_tour = new ArrayList<>();
     private ArrayList<String> al_desc_tour = new ArrayList<>();
@@ -54,6 +57,7 @@ public class Dashboard extends AppCompatActivity {
         txtEmail = findViewById(R.id.tv_email);
         checkTickets = findViewById(R.id.check_ticket);
         toolbar = findViewById(R.id.main_toolbar);
+        searchView = findViewById(R.id.searchView);
 
         setSupportActionBar(toolbar);
         localStore = getSharedPreferences("loginState", MODE_PRIVATE);
@@ -108,6 +112,8 @@ public class Dashboard extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ////
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -174,6 +180,45 @@ public class Dashboard extends AppCompatActivity {
 
             }
         });
+
+        //@Override
+
+        }
+
+//    protected void onStart() {
+//        super.onStart();
+//        if(databaseReference!=null){
+//            databaseReference.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
+//        }
+//        if(searchView != null){
+//            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//                @Override
+//                public boolean onQueryTextSubmit(String query) {
+//                    return false;
+//                }
+//
+//                @Override
+//                public boolean onQueryTextChange(String newText) {
+//                    search(s);
+//                    return true;
+//                }
+//            });
+//        }
+//    }
+//    private void search(String str){
+//        ArrayList<al_img_tour> myList = new ArrayList<>();
+//        for(al_img_tour object : myList){
+//
+//        }
     }
 
-}

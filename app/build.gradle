@@ -56,6 +56,5 @@ dependencies {
     // Firebase Realtime Database Dependency
     implementation 'com.google.firebase:firebase-database'
 
-    //implementation 'com.razorpay:checkout:1.6.4'
     implementation 'com.razorpay:checkout:1.6.10'
 }

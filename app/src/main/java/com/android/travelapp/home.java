@@ -20,6 +20,7 @@ public class home extends AppCompatActivity{
 
         FloatingActionButton main_home_btn = findViewById(R.id.main_home_btn);
         Button weather_btn = findViewById(R.id.weather_btn);
+        FloatingActionButton chatBot_btn = findViewById(R.id.chatbot_btn);
 
         main_home_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,7 +38,14 @@ public class home extends AppCompatActivity{
             }
         });
 
-    }
+        chatBot_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(home.this, ChatBotScreen.class);
+                startActivity(intent);
+            }
+        });
 
+    }
 
 }

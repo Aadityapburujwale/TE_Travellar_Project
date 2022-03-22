@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -37,13 +38,11 @@ public class Dashboard extends AppCompatActivity {
     AlertDialog alertDialog;
     MenuInflater inflater;
 
+    RecycleViewAdapter adapter;
+
     SearchView searchView;
 
-    private ArrayList<String> al_img_tour = new ArrayList<>();
-    private ArrayList<String> al_name_tour = new ArrayList<>();
-    private ArrayList<String> al_desc_tour = new ArrayList<>();
-    private ArrayList<Integer> al_price_tour = new ArrayList<>();
-    private ArrayList<String> al_location = new ArrayList<>();
+    private ArrayList<TourModel> tourList;
 
     private Toolbar toolbar;
 
@@ -59,6 +58,8 @@ public class Dashboard extends AppCompatActivity {
         searchView = findViewById(R.id.searchView);
 
         searchView.setQueryHint("Search Location");
+
+         tourList = new ArrayList<>();
 
         setSupportActionBar(toolbar);
         localStore = getSharedPreferences("loginState", MODE_PRIVATE);
@@ -105,15 +106,59 @@ public class Dashboard extends AppCompatActivity {
 
             }
         });
+
+
+        // Search Bar Implementation
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                showFilteredData(newText);
+                return false;
+            }
+        });
+
     }
+
+    void showFilteredData(String query){
+        ArrayList<TourModel> filteredlist = new ArrayList<>();
+        for(TourModel tour : tourList){
+            if(tour.getTourName().toLowerCase().contains(query.toLowerCase())){
+                filteredlist.add(tour);
+            }
+        }
+
+        if(filteredlist.isEmpty()){
+            RecycleViewAdapterProcess();
+            Toast.makeText(Dashboard.this,"No place Matched With your input",Toast.LENGTH_SHORT).show();
+        }else{
+            RecycleViewAdapterProcess(filteredlist);
+        }
+
+    }
+
 
     private void RecycleViewAdapterProcess() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        RecycleViewAdapter adapter = new RecycleViewAdapter(al_img_tour, al_name_tour, al_desc_tour, al_price_tour, al_location, this);
+        adapter = new RecycleViewAdapter(tourList, this);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ////
+
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void RecycleViewAdapterProcess(ArrayList<TourModel> filteredList) {
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        adapter = new RecycleViewAdapter(filteredList, this);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         recyclerView.setAdapter(adapter);
     }
 
@@ -165,12 +210,14 @@ public class Dashboard extends AppCompatActivity {
                     String tourPrice = dataSnapshot.child("Tour_Price").getValue().toString();
                     String placeImage = dataSnapshot.child("Place_Image").getValue().toString();
 
+                    TourModel tour = new TourModel();
+                    tour.setTourImg(placeImage);
+                    tour.setTourDesc(placeDesc);
+                    tour.setTourLoc(placeLocation);
+                    tour.setTourName(placeName);
+                    tour.setTourPrice(tourPrice);
 
-                    al_img_tour.add(placeImage);
-                    al_name_tour.add(placeName);
-                    al_desc_tour.add(placeDesc);
-                    al_price_tour.add(Integer.parseInt(tourPrice));
-                    al_location.add(placeLocation);
+                    tourList.add(tour);
 
                 }
                 RecycleViewAdapterProcess();
@@ -181,46 +228,7 @@ public class Dashboard extends AppCompatActivity {
 
             }
         });
-
-        //@Override
-
-        }
-
-//    protected void onStart() {
-//        super.onStart();
-//        if(databaseReference!=null){
-//            databaseReference.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
-//        }
-//        if(searchView != null){
-//            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//                @Override
-//                public boolean onQueryTextSubmit(String query) {
-//                    return false;
-//                }
-//
-//                @Override
-//                public boolean onQueryTextChange(String newText) {
-//                    search(s);
-//                    return true;
-//                }
-//            });
-//        }
-//    }
-//    private void search(String str){
-//        ArrayList<al_img_tour> myList = new ArrayList<>();
-//        for(al_img_tour object : myList){
-//
-//        }
+    }
 
     public void goToEditUser(View view) {
         String userName = localStore.getString("UserName","NA");

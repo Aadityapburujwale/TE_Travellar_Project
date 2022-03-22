@@ -71,7 +71,7 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
                 mCount++;
                 txtCount.setText(Integer.toString(mCount));
                 if (getIntent().hasExtra("priceTour")){
-                    int price_tour = getIntent().getIntExtra("priceTour",0);
+                    int price_tour = Integer.parseInt(getIntent().getStringExtra("priceTour"));
                     int totalPrice = price_tour * mCount;
                     priceTour.setText(Integer.toString(totalPrice));
                 }
@@ -120,6 +120,7 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
                             databaseReference.child(userName).child("Tickets_Details").child("Tour_Price").setValue(tourPrice);
                             databaseReference.child(userName).child("Tickets_Details").child("Total_Tickect_Price").setValue(totalTicketsPrice);
                             databaseReference.child(userName).child("Tickets_Details").child("Tour_Date").setValue(date);
+
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
@@ -158,18 +159,18 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
             String image_tour = getIntent().getStringExtra("imgTour");
             String name_tour = getIntent().getStringExtra("nameTour");
             String desc_tour = getIntent().getStringExtra("descTour");
-            int price_tour = getIntent().getIntExtra("priceTour", 0);
+            String price_tour = getIntent().getStringExtra("priceTour");
 
             setDataDetail(image_tour, name_tour, desc_tour, price_tour);
         }
     }
 
-    private void setDataDetail(String image_tour, String name_tour, String desc_tour, int price_tour) {
+    private void setDataDetail(String image_tour, String name_tour, String desc_tour, String price_tour) {
         Glide.with(this).asBitmap().load(image_tour).into(imgTour);
 
         nameTour.setText(name_tour);
         descTour.setText(desc_tour);
-        priceTour.setText(Integer.toString(price_tour));
+        priceTour.setText(price_tour);
     }
 
     void showDatePicker(){
@@ -180,6 +181,11 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
                 Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         );
+
+        // Get Yestersday Date
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 0);
+        datePicker.getDatePicker().setMinDate(calendar.getTimeInMillis());
         datePicker.show();
     }
 

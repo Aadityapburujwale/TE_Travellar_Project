@@ -19,19 +19,11 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHolder> {
-    private ArrayList<String> al_img_tour = new ArrayList<>();
-    private ArrayList<String> al_name_tour = new ArrayList<>();
-    private ArrayList<String> al_desc_tour = new ArrayList<>();
-    private ArrayList<Integer> al_price_tour = new ArrayList<>();
-    private ArrayList<String> al_location = new ArrayList<>();
+    private ArrayList<TourModel> tourList = new ArrayList<>();
     private Context context;
 
-    public RecycleViewAdapter(ArrayList<String>al_img_tour, ArrayList<String>al_name_tour, ArrayList<String>al_desc_tour, ArrayList<Integer> al_price_tour, ArrayList<String> al_location, Context context){
-        this.al_img_tour = al_img_tour;
-        this.al_name_tour = al_name_tour;
-        this.al_desc_tour = al_desc_tour;
-        this.al_price_tour = al_price_tour;
-        this.al_location = al_location;
+    public RecycleViewAdapter(ArrayList<TourModel> tourList, Context context){
+        this.tourList = tourList;
         this.context = context;
     }
 
@@ -45,20 +37,19 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Glide.with(context).asBitmap().load(al_img_tour.get(position)).into(holder.imgTour);
-        holder.nameTour.setText(al_name_tour.get(position));
-//        holder.descTour.setText(al_desc_tour.get(position));
-        holder.priceTour.setText(Integer.toString(al_price_tour.get(position)));
+        Glide.with(context).asBitmap().load(tourList.get(position).getTourImg()).into(holder.imgTour);
+        holder.nameTour.setText(tourList.get(position).getTourName());
+        holder.priceTour.setText(tourList.get(position).getTourPrice());
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, TourDetail.class);
-                intent.putExtra("imgTour", al_img_tour.get(position));
-                intent.putExtra("nameTour", al_name_tour.get(position));
-                intent.putExtra("descTour", al_desc_tour.get(position));
-                intent.putExtra("locTour", al_location.get(position));
-                intent.putExtra("priceTour", al_price_tour.get(position));
+                intent.putExtra("imgTour", tourList.get(position).getTourImg());
+                intent.putExtra("nameTour", tourList.get(position).getTourName());
+                intent.putExtra("descTour", tourList.get(position).getTourDesc());
+                intent.putExtra("locTour", tourList.get(position).getTourLoc());
+                intent.putExtra("priceTour", tourList.get(position).getTourPrice());
 
                 context.startActivity(intent);
             }
@@ -68,7 +59,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
     @Override
     public int getItemCount() {
-        return al_name_tour.size();
+        return tourList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

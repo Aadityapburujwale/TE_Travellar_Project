@@ -48,25 +48,19 @@
                         android:textSize="18dp"
                         android:textStyle="bold" />
                 </LinearLayout>
-                <LinearLayout
+                <ImageButton
+                    android:id="@+id/btn_img_loc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right">
-
-                    <ImageButton
-                        android:id="@+id/btn_img_loc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@null"
-                        android:elevation="6dp"
-                        app:srcCompat="@drawable/ic_loc"
-                        android:background="@drawable/button_background"/>
-                </LinearLayout>
+                    android:contentDescription="@null"
+                    android:elevation="6dp"
+                    app:srcCompat="@drawable/ic_loc"
+                    android:background="@drawable/button_background"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="280dp"
+                android:layout_height="270dp"
                 android:orientation="vertical">
 
                 <TextView

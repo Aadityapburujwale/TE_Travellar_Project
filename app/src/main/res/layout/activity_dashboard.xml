@@ -112,7 +112,7 @@
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignParentTop="true"
             android:iconifiedByDefault="false"
@@ -125,19 +125,5 @@
             tools:listitem="@layout/desain_dashboard_adapter" />
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/chatbot_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:backgroundTint="#FDE503"
-        android:contentDescription="TODO"
-        android:src="@drawable/ic_baseline_person_24"
-        app:fabCustomSize="65dp" />
 
 </LinearLayout>

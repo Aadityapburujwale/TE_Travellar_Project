@@ -5,15 +5,16 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".WeatherActivity"
-    android:background="#e8f4f8"
+    android:background="@drawable/weather1"
     android:orientation="vertical"
     android:padding="16dp">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="40sp"
-        android:text="Weather Update"/>
+        android:textSize="35sp"
+        android:textColor="@color/black"
+        android:text="WEATHER UPDATE"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,12 +25,15 @@
             android:layout_height="0dp"
             android:layout_weight="1">
         </View>
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/etCity"
             android:layout_marginBottom="10dp"
             android:ems="10"
+            android:textColorHint="@color/grey"
+            android:textColor="@color/black"
             android:hint="Enter City Name"
             android:inputType="textPersonName" />
 
@@ -41,7 +45,7 @@
             android:background="#0070c7"
             android:textColor="@android:color/white"
             android:onClick="getWeatherDetails"
-            android:text="Get"
+            android:text="Show Weather"
             app:backgroundTint="@null" />
         <ScrollView
             android:layout_width="match_parent"

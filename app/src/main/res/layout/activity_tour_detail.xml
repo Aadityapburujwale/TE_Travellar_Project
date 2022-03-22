@@ -34,7 +34,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="320dp"
+                    android:layout_width="250dp"
                     android:layout_height="match_parent">
 
                     <TextView
@@ -54,8 +54,7 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="@null"
                     android:elevation="6dp"
-                    app:srcCompat="@drawable/ic_loc"
-                    android:background="@drawable/button_background"/>
+                    app:srcCompat="@drawable/ic_loc" android:background="@drawable/button_background"/>
             </LinearLayout>
 
             <LinearLayout

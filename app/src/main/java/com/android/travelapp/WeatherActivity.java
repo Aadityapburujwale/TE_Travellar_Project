@@ -70,7 +70,7 @@ public class WeatherActivity extends AppCompatActivity {
                         JSONObject jsonObjectSys = jsonResponse.getJSONObject("sys");
                         String countryName = jsonObjectSys.getString("country");
                         String cityName = jsonResponse.getString("name");
-                        tvResult.setTextColor(Color.rgb(68,134,199));
+                        tvResult.setTextColor(Color.rgb(0,0,0));
                         output += "Current weather of " + cityName + " (" + countryName + ")"
                                 + "\n Temp: " + df.format(temp) + " °C"
                                 + "\n Feels Like: " + df.format(feelsLike) + " °C"
@@ -84,7 +84,8 @@ public class WeatherActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-            }, new Response.ErrorListener(){
+            },
+                    new Response.ErrorListener(){
 
                 @Override
                 public void onErrorResponse(VolleyError error) {

@@ -34,7 +34,6 @@ public class Dashboard extends AppCompatActivity {
 
     TextView txtName, txtEmail;
     Button checkTickets;
-
     AlertDialog alertDialog;
     MenuInflater inflater;
 
@@ -58,6 +57,8 @@ public class Dashboard extends AppCompatActivity {
         checkTickets = findViewById(R.id.check_ticket);
         toolbar = findViewById(R.id.main_toolbar);
         searchView = findViewById(R.id.searchView);
+
+        searchView.setQueryHint("Search Location");
 
         setSupportActionBar(toolbar);
         localStore = getSharedPreferences("loginState", MODE_PRIVATE);
@@ -220,5 +221,13 @@ public class Dashboard extends AppCompatActivity {
 //        for(al_img_tour object : myList){
 //
 //        }
+
+    public void goToEditUser(View view) {
+        String userName = localStore.getString("UserName","NA");
+
+        Intent intent = new Intent(Dashboard.this, EditUser.class);
+        intent.putExtra("userName",userName);
+        startActivity(intent);
     }
+}
 

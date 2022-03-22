@@ -2,6 +2,7 @@ package com.android.travelapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +25,7 @@ import java.security.NoSuchAlgorithmException;
 public class EditUser extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://travellapplication-default-rtdb.firebaseio.com");
-
+    SharedPreferences localStore;
 
     TextInputLayout inpName, inpEmail, inpPhone, inpUser, inpPass, inpRePass;
     Button btnUpdate, btnReset;
@@ -45,6 +46,7 @@ public class EditUser extends AppCompatActivity {
 
         inpUser.setEnabled(false);
         inpUser.setBackgroundColor(R.color.disableColor);
+        localStore = getSharedPreferences("loginState", MODE_PRIVATE);
 
         String userName = getIntent().getStringExtra("userName");
         boolean changePassword = getIntent().getBooleanExtra("changePassword",false);
@@ -127,6 +129,11 @@ public class EditUser extends AppCompatActivity {
                         databaseReference.child("Users").child(userName).child("Email").setValue(emailValue);
                         databaseReference.child("Users").child(userName).child("Mobile_No").setValue(phoneValue);
                         databaseReference.child("Users").child(userName).child("Password").setValue(hashedPassword);
+
+
+                        SharedPreferences.Editor editLocalDB = localStore.edit();
+                        editLocalDB.putString("Email",emailValue);
+                        editLocalDB.commit();
 
                         Toast.makeText(EditUser.this,"Data Updated Succesfully",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(EditUser.this,LoginPage.class);

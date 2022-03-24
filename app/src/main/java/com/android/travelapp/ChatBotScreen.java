@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,12 +19,17 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ChatBotScreen extends AppCompatActivity {
 
@@ -32,6 +40,13 @@ public class ChatBotScreen extends AppCompatActivity {
     private final String BOT_KEY = "bot";
 
     private RequestQueue mRequestQueue;
+    DecimalFormat df = new DecimalFormat("#.##");
+
+    private final String url = "https://api.openweathermap.org/data/2.5/weather";
+    private final String appid = "e53301e27efa0b66d05045d91b2742d3";
+    String weatherWords[] = new String[]{"wheather","weather","weater","wether"};
+    String temperatureWords[] = new String[]{"temperature","temp","temperature","temp."};
+
 
     // creating a variable for array list and adapter class.
     private ArrayList<ChatBotModel> messageModalArrayList;
@@ -97,6 +112,26 @@ public class ChatBotScreen extends AppCompatActivity {
         // url for our brain
         // make sure to add mshape for uid.
         // make sure to add your url.
+
+
+        for(String str:weatherWords){
+            if(userMsg.toLowerCase().contains(str)){
+
+                checkWheather(userMsg);
+
+                return;
+            }
+        }
+
+        for(String str:temperatureWords){
+            if(userMsg.toLowerCase().contains(str)){
+
+                checkTemp(userMsg);
+
+                return;
+            }
+        }
+
         String url = "http://api.brainshop.ai/get?bid=164965&key=VlAvKqtPeAawuJro&uid=aadityapb&msg=" + userMsg;
 
         // creating a variable for our request queue.
@@ -109,7 +144,7 @@ public class ChatBotScreen extends AppCompatActivity {
                 try {
                     // in on response method we are extracting data
                     // from json response and adding this response to our array list.
-        Toast.makeText(ChatBotScreen.this,"ABCDE",Toast.LENGTH_SHORT).show();
+
                     String botResponse = response.getString("cnt");
                     messageModalArrayList.add(new ChatBotModel(botResponse, BOT_KEY));
 
@@ -137,6 +172,120 @@ public class ChatBotScreen extends AppCompatActivity {
         // at last adding json object
         // request to our queue.
         queue.add(jsonObjectRequest);
+    }
+
+    private void checkTemp(String userMsg) {
+        String tempUrl = "";
+        String cities[] = userMsg.split(" ");
+
+        for(String city:cities){
+            tempUrl = url + "?q=" + city + "&appid=" + appid;
+
+            Set<String> set = new HashSet<>();
+            set.add("temp");
+            set.add("see");
+            set.add("is");
+            set.add("of");
+            set.add("show");
+            set.add("me");
+            if(set.contains(city)) continue;
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, tempUrl, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    String output = "";
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+                        JSONArray jsonArray = jsonResponse.getJSONArray("weather");
+                        JSONObject jsonObjectWeather = jsonArray.getJSONObject(0);
+                       // String description = jsonObjectWeather.getString("description");
+                        JSONObject jsonObjectMain = jsonResponse.getJSONObject("main");
+                        String temp = df.format(jsonObjectMain.getDouble("temp") - 273.15) + " °C";
+                        messageModalArrayList.add(new ChatBotModel(temp, BOT_KEY));
+                        //messageModalArrayList.add(new ChatBotModel(description, BOT_KEY));
+
+                        // notifying our adapter as data changed.
+                        chatBotAdapter.notifyDataSetChanged();
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            },
+                    new Response.ErrorListener(){
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            //Toast.makeText(getApplicationContext(), "Enter Valid City Name.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+            requestQueue.add(stringRequest);
+        }
+
+    }
+
+    private void checkWheather(String userMsg) {
+        String tempUrl = "";
+        String cities[] = userMsg.split(" ");
+
+        for(String city:cities){
+                tempUrl = url + "?q=" + city + "&appid=" + appid;
+
+                Set<String> set = new HashSet<>();
+                set.add("temp");
+                set.add("see");
+                set.add("is");
+                set.add("of");
+                set.add("show");
+                set.add("me");
+                if(set.contains(city)) continue;
+
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, tempUrl, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        String output = "";
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            JSONArray jsonArray = jsonResponse.getJSONArray("weather");
+                            JSONObject jsonObjectWeather = jsonArray.getJSONObject(0);
+                            String description = jsonObjectWeather.getString("description");
+                            JSONObject jsonObjectMain = jsonResponse.getJSONObject("main");
+                            String temp = df.format(jsonObjectMain.getDouble("temp") - 273.15) + " °C";
+                            messageModalArrayList.add(new ChatBotModel(description, BOT_KEY));
+                            // notifying our adapter as data changed.
+                            chatBotAdapter.notifyDataSetChanged();
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                        new Response.ErrorListener(){
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                //Toast.makeText(getApplicationContext(), "Enter Valid City Name.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                requestQueue.add(stringRequest);
+            }
+
+    }
+
+
+    void showMap(String location){
+
+                Uri uri = Uri.parse("geo:0,0?q="+"Where am I ?");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+
+                if(mapIntent.resolveActivity(getPackageManager()) != null){
+                    startActivity(mapIntent);
+                }
     }
 
 }

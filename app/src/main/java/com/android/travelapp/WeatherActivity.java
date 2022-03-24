@@ -47,7 +47,7 @@ public class WeatherActivity extends AppCompatActivity {
             tvResult.setText("City field can not be empty!");
         }else{
 
-                tempUrl = url + "?q=" + city + "&appid=" + appid;
+            tempUrl = url + "?q=" + city + "&appid=" + appid;
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, tempUrl, new Response.Listener<String>() {
                 @Override
@@ -87,11 +87,11 @@ public class WeatherActivity extends AppCompatActivity {
             },
                     new Response.ErrorListener(){
 
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getApplicationContext(), "Enter Valid City Name.", Toast.LENGTH_SHORT).show();
-                }
-            });
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getApplicationContext(), "Enter Valid City Name.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
             RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
             requestQueue.add(stringRequest);
         }

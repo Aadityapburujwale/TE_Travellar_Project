@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -96,7 +97,7 @@ public class ChatBotScreen extends AppCompatActivity {
         // url for our brain
         // make sure to add mshape for uid.
         // make sure to add your url.
-        String url = "Enter you API URL here" + userMsg;
+        String url = "http://api.brainshop.ai/get?bid=164965&key=VlAvKqtPeAawuJro&uid=aadityapb&msg=" + userMsg;
 
         // creating a variable for our request queue.
         RequestQueue queue = Volley.newRequestQueue(ChatBotScreen.this);
@@ -108,6 +109,7 @@ public class ChatBotScreen extends AppCompatActivity {
                 try {
                     // in on response method we are extracting data
                     // from json response and adding this response to our array list.
+        Toast.makeText(ChatBotScreen.this,"ABCDE",Toast.LENGTH_SHORT).show();
                     String botResponse = response.getString("cnt");
                     messageModalArrayList.add(new ChatBotModel(botResponse, BOT_KEY));
 
@@ -125,6 +127,7 @@ public class ChatBotScreen extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // error handling.
+                Log.e("Volley-Error",error.toString());
                 messageModalArrayList.add(new ChatBotModel("Sorry no response found", BOT_KEY));
                 chatBotAdapter.notifyDataSetChanged();
                 Toast.makeText(ChatBotScreen.this, "No response from the bot..", Toast.LENGTH_SHORT).show();

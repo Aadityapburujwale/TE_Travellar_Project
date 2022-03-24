@@ -47,7 +47,7 @@ public class ChatBotScreen extends AppCompatActivity {
     String weatherWords[] = new String[]{"wheather","weather","weater","wether"};
     String temperatureWords[] = new String[]{"temperature","temp","temperature","temp.","temparature"};
 
-    String showMapWords[] = new String[]{"my location","my loc","temples","hotels","places to see","places","where i am?","show my near by places","near by places","near by hotels","near by hotel","my location","my loc","my current loc","my current location","nearby hotels","nearby temples","my near by temples","temples near by me", "hotels near by me","temple near to me","hotel near to me","hotels near to me", "where i am ?"};
+    String showMapWords[] = new String[]{"where i am","my location","my loc","temples","hotels","places to see","places","where i am?","show my near by places","near by places","near by hotels","near by hotel","my location","my loc","my current loc","my current location","nearby hotels","nearby temples","my near by temples","temples near by me", "hotels near by me","temple near to me","hotel near to me","hotels near to me", "where i am ?"};
 
     // creating a variable for array list and adapter class.
     private ArrayList<ChatBotModel> messageModalArrayList;
@@ -115,6 +115,7 @@ public class ChatBotScreen extends AppCompatActivity {
         messageModalArrayList.add(new ChatBotModel(userMsg, USER_KEY));
         chatBotAdapter.notifyDataSetChanged();
 
+
         // url for our brain
         // make sure to add mshape for uid.
         // make sure to add your url.
@@ -122,26 +123,24 @@ public class ChatBotScreen extends AppCompatActivity {
         int listSize = messageModalArrayList.size();
         for(String str:weatherWords){
             if(userMsg.toLowerCase().contains(str)){
-
                 checkWheather(userMsg);
-                break;
+                // to scroll recycler view to last message
+                chatsRV.smoothScrollToPosition(messageModalArrayList.size());
+
+                return;
             }
         }
 
-        if(listSize!=messageModalArrayList.size()){
-            return;
-        }
 
         for(String str:temperatureWords){
             if(userMsg.toLowerCase().contains(str)){
 
                 checkTemp(userMsg);
-                break;
-            }
-        }
+                // to scroll recycler view to last message
+                chatsRV.smoothScrollToPosition(messageModalArrayList.size());
 
-        if(listSize!=messageModalArrayList.size()){
-            return;
+                return;
+            }
         }
 
         for(String str:showMapWords){
@@ -175,12 +174,18 @@ public class ChatBotScreen extends AppCompatActivity {
 
                     // notifying our adapter as data changed.
                     chatBotAdapter.notifyDataSetChanged();
+                    // to scroll recycler view to last message
+                    chatsRV.smoothScrollToPosition(messageModalArrayList.size());
+
                 } catch (JSONException e) {
                     e.printStackTrace();
 
                     // handling error response from bot.
                     messageModalArrayList.add(new ChatBotModel("No response", BOT_KEY));
                     chatBotAdapter.notifyDataSetChanged();
+                    // to scroll recycler view to last message
+                    chatsRV.smoothScrollToPosition(messageModalArrayList.size());
+
                 }
             }
         }, new Response.ErrorListener() {
@@ -194,28 +199,31 @@ public class ChatBotScreen extends AppCompatActivity {
             }
         });
 
+        // to scroll recycler view to last message
+        chatsRV.smoothScrollToPosition(messageModalArrayList.size());
+
         // at last adding json object
         // request to our queue.
         queue.add(jsonObjectRequest);
 
-        // to scroll recycler view to last message
-        chatsRV.smoothScrollToPosition(messageModalArrayList.size());
     }
 
     private void checkTemp(String userMsg) {
         String tempUrl = "";
+
+        Set<String> set = new HashSet<>();
+        set.add("temp");
+        set.add("see");
+        set.add("is");
+        set.add("of");
+        set.add("show");
+        set.add("me");
         String cities[] = userMsg.split(" ");
 
         for(String city:cities){
             tempUrl = url + "?q=" + city + "&appid=" + appid;
 
-            Set<String> set = new HashSet<>();
-            set.add("temp");
-            set.add("see");
-            set.add("is");
-            set.add("of");
-            set.add("show");
-            set.add("me");
+
             if(set.contains(city)) continue;
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, tempUrl, new Response.Listener<String>() {
@@ -258,16 +266,18 @@ public class ChatBotScreen extends AppCompatActivity {
         String tempUrl = "";
         String cities[] = userMsg.split(" ");
 
+        Set<String> set = new HashSet<>();
+        set.add("temp");
+        set.add("see");
+        set.add("is");
+        set.add("of");
+        set.add("show");
+        set.add("me");
+
         for(String city:cities){
                 tempUrl = url + "?q=" + city + "&appid=" + appid;
 
-                Set<String> set = new HashSet<>();
-                set.add("temp");
-                set.add("see");
-                set.add("is");
-                set.add("of");
-                set.add("show");
-                set.add("me");
+
                 if(set.contains(city)) continue;
 
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, tempUrl, new Response.Listener<String>() {

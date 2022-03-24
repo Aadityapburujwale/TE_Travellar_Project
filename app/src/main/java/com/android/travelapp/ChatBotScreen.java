@@ -46,8 +46,8 @@ public class ChatBotScreen extends AppCompatActivity {
     private final String appid = "e53301e27efa0b66d05045d91b2742d3";
     String weatherWords[] = new String[]{"wheather","weather","weater","wether"};
     String temperatureWords[] = new String[]{"temperature","temp","temperature","temp.","temparature"};
-    String showMapWords[] = new String[]{"my location","my loc","temples","hotels","places to see","places","where i am?","where i am?","show my near by places","near by places","near by hotels","near by hotel","my location","my loc","my current loc","my current location","nearby hotels","nearby temples","my near by temples","temples near by me", "hotels near by me","temple near to me","hotel near to me","hotels near to me"};
 
+    String showMapWords[] = new String[]{"my location","my loc","temples","hotels","places to see","places","where i am?","show my near by places","near by places","near by hotels","near by hotel","my location","my loc","my current loc","my current location","nearby hotels","nearby temples","my near by temples","temples near by me", "hotels near by me","temple near to me","hotel near to me","hotels near to me", "where i am ?"};
 
     // creating a variable for array list and adapter class.
     private ArrayList<ChatBotModel> messageModalArrayList;

@@ -45,7 +45,8 @@ public class ChatBotScreen extends AppCompatActivity {
     private final String url = "https://api.openweathermap.org/data/2.5/weather";
     private final String appid = "e53301e27efa0b66d05045d91b2742d3";
     String weatherWords[] = new String[]{"wheather","weather","weater","wether"};
-    String temperatureWords[] = new String[]{"temperature","temp","temperature","temp."};
+    String temperatureWords[] = new String[]{"temperature","temp","temperature","temp.","temparature"};
+    String showMapWords[] = new String[]{"my location","my loc","temples","hotels","places to see","places","where i am?","show my near by places","near by places","near by hotels","near by hotel","my location","my loc","my current loc","my current location","nearby hotels","nearby temples","my near by temples","temples near by me", "hotels near by me","temple near to me","hotel near to me","hotels near to me"};
 
 
     // creating a variable for array list and adapter class.
@@ -113,14 +114,17 @@ public class ChatBotScreen extends AppCompatActivity {
         // make sure to add mshape for uid.
         // make sure to add your url.
 
-
+        int listSize = messageModalArrayList.size();
         for(String str:weatherWords){
             if(userMsg.toLowerCase().contains(str)){
 
                 checkWheather(userMsg);
 
-                return;
             }
+        }
+
+        if(listSize!=messageModalArrayList.size()){
+            return;
         }
 
         for(String str:temperatureWords){
@@ -128,8 +132,24 @@ public class ChatBotScreen extends AppCompatActivity {
 
                 checkTemp(userMsg);
 
-                return;
             }
+        }
+
+        if(listSize!=messageModalArrayList.size()){
+            return;
+        }
+
+        for(String str:showMapWords){
+            if(userMsg.toLowerCase().contains(str)){
+                messageModalArrayList.add(new ChatBotModel("You are redirected to map", BOT_KEY));
+                chatBotAdapter.notifyDataSetChanged();
+            showMap(str);
+
+            }
+        }
+
+        if(listSize!=messageModalArrayList.size()){
+            return;
         }
 
         String url = "http://api.brainshop.ai/get?bid=164965&key=VlAvKqtPeAawuJro&uid=aadityapb&msg=" + userMsg;
@@ -163,9 +183,9 @@ public class ChatBotScreen extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 // error handling.
                 Log.e("Volley-Error",error.toString());
-                messageModalArrayList.add(new ChatBotModel("Sorry no response found", BOT_KEY));
+                messageModalArrayList.add(new ChatBotModel("you are offline! I can't help you.", BOT_KEY));
                 chatBotAdapter.notifyDataSetChanged();
-                Toast.makeText(ChatBotScreen.this, "No response from the bot..", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ChatBotScreen.this, "No response from the bot..", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -277,9 +297,9 @@ public class ChatBotScreen extends AppCompatActivity {
     }
 
 
-    void showMap(String location){
+    private void showMap(String location){
 
-                Uri uri = Uri.parse("geo:0,0?q="+"Where am I ?");
+                Uri uri = Uri.parse("geo:0,0?q="+location);
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
                 mapIntent.setPackage("com.google.android.apps.maps");
 

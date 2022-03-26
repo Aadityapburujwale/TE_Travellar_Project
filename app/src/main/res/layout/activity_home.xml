@@ -71,7 +71,7 @@
         android:layout_marginLeft="185dp"
         android:layout_marginTop="400dp"
         android:backgroundTint="#FFF4E803"
-        android:text="Map"
+        android:text="Location"
         android:textStyle="bold" />
 
 

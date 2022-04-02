@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +39,8 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
     Button addCount, subCount, btnPay, select_date_btn;
     ImageButton btnLoc;
     int mCount=1;
+    RadioButton SourceRadioBtn;
+    RadioGroup Radio_Group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,8 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
         btnPay = findViewById(R.id.btn_pay);
         btnLoc = findViewById(R.id.btn_img_loc);
         select_date_btn = findViewById(R.id.select_date_btn);
+        Radio_Group = (RadioGroup)findViewById(R.id.Radio_group);
+
 
         localStore = getSharedPreferences("loginState", MODE_PRIVATE);
         txtCount.setText(Integer.toString(mCount));
@@ -193,5 +199,26 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         String date = String.format("%02d-%02d-%d",dayOfMonth,month+1,year);
         select_date_btn.setText(date);
+    }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.bus_radio_btn:
+                if (checked)
+                    // Bus Medium selected
+                    break;
+            case R.id.train_radio_btn:
+                if (checked)
+                    // Train Medium selected
+                    break;
+            case R.id.aeroplane_radio_btn:
+                if (checked)
+                    // Aeroplane Medium selected
+                    break;
+        }
     }
 }

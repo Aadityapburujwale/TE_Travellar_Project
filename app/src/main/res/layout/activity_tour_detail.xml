@@ -57,21 +57,85 @@
                     app:srcCompat="@drawable/ic_loc" android:background="@drawable/button_background"/>
             </LinearLayout>
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="270dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/desc_tour"
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:fontFamily="sans-serif"
-                    android:text="Desc Tour"
-                    android:textColor="@color/black"
-                    android:textSize="15dp" />
-            </LinearLayout>
+                    android:layout_height="270dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/desc_tour"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:fontFamily="sans-serif"
+                            android:text="Desc Tour"
+                            android:textColor="@color/black"
+                            android:textSize="15dp" />
+
+                    </LinearLayout>
+
+                    <!--                <TextView-->
+                    <!--                    android:layout_width="wrap_content"-->
+                    <!--                    android:layout_height="wrap_content"-->
+                    <!--                    android:text="Select The Medium"-->
+                    <!--                    android:textColor="@color/black"-->
+                    <!--                    android:textStyle="bold"-->
+                    <!--                    android:textSize="15dp"-->
+                    <!--                    />-->
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/Radio_group">
+
+
+                    <RadioButton
+                        android:id="@+id/bus_radio_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="Bus"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="155dp"
+                        android:onClick="onRadioButtonClicked"/>
+
+                    <RadioButton
+                        android:id="@+id/train_radio_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="112dp"
+                        android:text="Train"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_marginTop="-48dp"
+                        android:onClick="onRadioButtonClicked"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/aeroplane_radio_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="205dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:text="Aeroplane"
+                        android:layout_marginTop="-48dp"
+                        android:onClick="onRadioButtonClicked"
+                        />
+                    </RadioGroup>
+
+                </LinearLayout>
+            </ScrollView>
 
             <LinearLayout
                 android:layout_width="match_parent"

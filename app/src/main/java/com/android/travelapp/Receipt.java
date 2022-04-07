@@ -75,7 +75,7 @@ public class Receipt extends AppCompatActivity implements PaymentResultListener 
                 nameTour.setText(nameTourView);
                 totalPeople.setText(totalItemsView);
                 priceTour.setText("Rs."+totalPriceView);
-                totalPrice.setText("Rs." + (Integer.parseInt(totalItemsView)*Integer.parseInt(totalPriceView)));
+                totalPrice.setText("Rs." + Integer.parseInt(totalPriceView));
                 Glide.with(Receipt.this).asBitmap().load(tourImageURL).into(imgTour);
             }
             @Override

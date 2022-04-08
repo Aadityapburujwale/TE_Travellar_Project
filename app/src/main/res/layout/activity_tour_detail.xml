@@ -128,7 +128,7 @@
                         android:layout_marginLeft="205dp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:text="Aeroplane"
+                        android:text="Flight"
                         android:layout_marginTop="-48dp"
                         android:onClick="onRadioButtonClicked"
                         />

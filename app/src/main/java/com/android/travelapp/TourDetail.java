@@ -1,11 +1,13 @@
 package com.android.travelapp;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -39,8 +41,9 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
     Button addCount, subCount, btnPay, select_date_btn;
     ImageButton btnLoc;
     int mCount=1;
-    RadioButton SourceRadioBtn;
     RadioGroup Radio_Group;
+    int PRICE;
+    int pricePerMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,11 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
         Radio_Group = (RadioGroup)findViewById(R.id.Radio_group);
 
 
+        PRICE = Integer.parseInt(getIntent().getStringExtra("priceTour"));
+        pricePerMode = PRICE;
+
+        Radio_Group.check(R.id.bus_radio_btn);
+
         localStore = getSharedPreferences("loginState", MODE_PRIVATE);
         txtCount.setText(Integer.toString(mCount));
         getDataAdapter();
@@ -76,22 +84,20 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
             public void onClick(View view) {
                 mCount++;
                 txtCount.setText(Integer.toString(mCount));
-                if (getIntent().hasExtra("priceTour")){
-                    int price_tour = Integer.parseInt(getIntent().getStringExtra("priceTour"));
-                    int totalPrice = price_tour * mCount;
-                    priceTour.setText(Integer.toString(totalPrice));
-                }
+                    int totalPrice = pricePerMode * mCount;
+                    updatePriceView(totalPrice);
+
             }
         });
+
         subCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mCount > 1){
                     mCount--;
                     txtCount.setText(Integer.toString(mCount));
-                    int price_tour = getIntent().getIntExtra("priceTour",0);
-                    int totalPrice = price_tour * mCount;
-                    priceTour.setText(Integer.toString(totalPrice));
+                    int totalPrice = pricePerMode * mCount;
+                    updatePriceView(totalPrice);
                 }
             }
         });
@@ -136,9 +142,14 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
 
                 Intent intent = new Intent(TourDetail.this, Receipt.class);
                 intent.putExtra("userName",userName);
+                ProgressDialog.show(TourDetail.this, "Loading", "Wait while loading...");
+                try {
+                    Thread.sleep(1000);
+                }catch (Exception e){
+                    Log.d("Testing","SLEEP THREAD");
+                }
                 startActivity(intent);
                 finish();
-
             }
         });
 
@@ -202,23 +213,23 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
     }
 
     public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
 
-        // Check which radio button was clicked
         switch(view.getId()) {
             case R.id.bus_radio_btn:
-                if (checked)
-                    // Bus Medium selected
+                pricePerMode = (1 * PRICE);
                     break;
             case R.id.train_radio_btn:
-                if (checked)
-                    // Train Medium selected
+                pricePerMode = (int)(0.5 * PRICE);
                     break;
             case R.id.aeroplane_radio_btn:
-                if (checked)
-                    // Aeroplane Medium selected
+                pricePerMode = (int)(1.5 * PRICE);
                     break;
         }
+        updatePriceView(pricePerMode);
     }
+
+    void updatePriceView(int totalPrice){
+        priceTour.setText(Integer.toString(totalPrice));
+    }
+
 }

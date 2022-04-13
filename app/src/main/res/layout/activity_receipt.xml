@@ -64,7 +64,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Detail User"
+                    android:text="User Details"
                     android:textSize="20dp"
                     android:fontFamily="sans-serif-black"
                     android:textColor="#1A237E"/>
@@ -106,6 +106,7 @@
                         android:text="Phone"
                         android:textColor="@color/black"
                         android:textSize="15dp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -155,7 +156,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Detail Tour"
+                    android:text="Tour Details"
                     android:textSize="20dp"
                     android:fontFamily="sans-serif-black"
                     android:textColor="#1A237E"/>
@@ -178,6 +179,15 @@
                         android:layout_marginBottom="10dp"
                         android:fontFamily="sans-serif"
                         android:text="Name Tour"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:text="Mode of Travel"
+                        android:layout_marginBottom="10dp"
                         android:textColor="@color/black"
                         android:textSize="15dp" />
 
@@ -212,6 +222,16 @@
                         android:layout_marginBottom="10dp"
                         android:fontFamily="sans-serif-black"
                         android:text="Name Tour"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/vehicle_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="sans-serif-black"
+                        android:text="Vehicle"
                         android:textColor="@color/black"
                         android:textSize="15dp" />
 

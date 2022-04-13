@@ -23,12 +23,13 @@
         android:weightSum="5">
 
         <!--edit text to enter message-->
-        <EditText
+         <EditText
             android:id="@+id/idEdtMessage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:hint="Type Here" />
+            android:hint="Type Here"
+            android:textColorHint="@color/grey"/>
 
         <!--button to send message-->
         <ImageButton

@@ -32,11 +32,12 @@ public class Receipt extends AppCompatActivity implements PaymentResultListener 
     String totalPriceView;
     String nameTourView;
     ImageView imgTour;
-    TextView nameTour, totalPeople, priceTour, totalPrice, name, email, phone;
+    TextView nameTour, totalPeople, priceTour, totalPrice, name, email, phone, vehicleMode;
     Button btnConfirm;
     AlertDialog dialog;
     String emailView;
     String phoneView;
+    String vehicle_mode;
 
 
     @Override
@@ -46,6 +47,7 @@ public class Receipt extends AppCompatActivity implements PaymentResultListener 
 
         imgTour = findViewById(R.id.img_tour);
         nameTour = findViewById(R.id.name_tour);
+        vehicleMode = findViewById(R.id.vehicle_mode);
         totalPeople = findViewById(R.id.total_people);
         priceTour = findViewById(R.id.price_tour);
         totalPrice = findViewById(R.id.total_price);
@@ -65,6 +67,7 @@ public class Receipt extends AppCompatActivity implements PaymentResultListener 
                  phoneView = snapshot.child(userName).child("Mobile_No").getValue(String.class);
 
                 nameTourView = snapshot.child(userName).child("Tickets_Details").child("Tour_Name").getValue(String.class);
+                vehicle_mode = snapshot.child(userName).child("Tickets_Details").child("Tour_Vehicle").getValue(String.class);
                  totalItemsView = snapshot.child(userName).child("Tickets_Details").child("Total_Tickets").getValue(String.class);
                 totalPriceView = snapshot.child(userName).child("Tickets_Details").child("Total_Tickect_Price").getValue(String.class);
                 String tourImageURL = snapshot.child(userName).child("Tickets_Details").child("Tour_IMG_URL").getValue(String.class);
@@ -73,6 +76,7 @@ public class Receipt extends AppCompatActivity implements PaymentResultListener 
                 email.setText(emailView);
                 phone.setText(phoneView);
                 nameTour.setText(nameTourView);
+                vehicleMode.setText(vehicle_mode);
                 totalPeople.setText(totalItemsView);
                 priceTour.setText("Rs."+totalPriceView);
                 totalPrice.setText("Rs." + Integer.parseInt(totalPriceView));
@@ -105,6 +109,9 @@ public class Receipt extends AppCompatActivity implements PaymentResultListener 
 
                     // put description
                     object.put("description", "Ticket Booking of Tour "+nameTourView);
+
+                    // Mode/ vehicle of travelling
+                    object.put("mode of travelling", vehicle_mode);
 
                     // to set theme color
                     object.put("theme.color", "");
@@ -180,7 +187,7 @@ public class Receipt extends AppCompatActivity implements PaymentResultListener 
 
     @Override
     public void onPaymentSuccess(String s) {
-        // this method is called on payment success.
+        // this method is called on payment suc cess.
         Toast.makeText(this, "Payment is successful : ", Toast.LENGTH_SHORT).show();
         finish();
     }

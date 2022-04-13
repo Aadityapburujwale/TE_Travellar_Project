@@ -26,7 +26,7 @@ public class Tickets extends AppCompatActivity {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://travellapplication-default-rtdb.firebaseio.com/Users");
 
 
-    TextView name, email, phone, nameTour, totalPeople, totalPrice, tour_date, expiry_view;
+    TextView name, email, phone, nameTour, vehicle ,totalPeople, totalPrice, tour_date, expiry_view;
     Button btnBack;
     AlertDialog dialog;
 
@@ -36,6 +36,7 @@ public class Tickets extends AppCompatActivity {
     private static final String KEY_PHONE = "phone";
     private static final String KEY_TOTAL_PRICE = "total_price";
     private static final String KEY_NAME_TOUR = "name_tour";
+    private static final String KEY_VEHICLE_TOUR = "vehicle_mode";
     private static final String KEY_COUNT_ITEMS = "count_items";
 
     @Override
@@ -47,6 +48,7 @@ public class Tickets extends AppCompatActivity {
         email = findViewById(R.id.email);
         phone = findViewById(R.id.phone);
         nameTour = findViewById(R.id.name_tour);
+        vehicle = findViewById(R.id.vehicle_mode);
         totalPeople = findViewById(R.id.total_people);
         totalPrice = findViewById(R.id.total_price);
         btnBack = findViewById(R.id.btn_back);
@@ -73,6 +75,7 @@ public class Tickets extends AppCompatActivity {
                 String phoneView = snapshot.child(userName).child("Mobile_No").getValue(String.class);
 
                 String nameTourView = snapshot.child(userName).child("Tickets_Details").child("Tour_Name").getValue(String.class);
+                String vehicle_mode = snapshot.child(userName).child("Tickets_Details").child("Tour_Vehicle").getValue(String.class);
                 String totalItemsView = snapshot.child(userName).child("Tickets_Details").child("Total_Tickets").getValue(String.class);
                 String totalPriceView = snapshot.child(userName).child("Tickets_Details").child("Total_Tickect_Price").getValue(String.class);
                 String tourDate = snapshot.child(userName).child("Tickets_Details").child("Tour_Date").getValue(String.class);
@@ -81,6 +84,7 @@ public class Tickets extends AppCompatActivity {
                 email.setText(emailView);
                 phone.setText(phoneView);
                 nameTour.setText(nameTourView);
+                vehicle.setText(vehicle_mode);
                 totalPeople.setText(totalItemsView);
                 totalPrice.setText("Rs." + totalPriceView);
                 tour_date.setText(tourDate);

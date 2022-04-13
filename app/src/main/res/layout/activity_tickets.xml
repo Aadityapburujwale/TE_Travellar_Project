@@ -121,6 +121,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:text="Mode of Travel"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:fontFamily="sans-serif"
                         android:text="Total People"
@@ -159,6 +168,16 @@
                         android:layout_marginBottom="10dp"
                         android:fontFamily="sans-serif-black"
                         android:text="Name Tour"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/vehicle_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="sans-serif-black"
+                        android:text="Vehicle"
                         android:textColor="@color/black"
                         android:textSize="15dp" />
 

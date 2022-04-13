@@ -132,6 +132,7 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
                             databaseReference.child(userName).child("Tickets_Details").child("Tour_Price").setValue(tourPrice);
                             databaseReference.child(userName).child("Tickets_Details").child("Total_Tickect_Price").setValue(totalTicketsPrice);
                             databaseReference.child(userName).child("Tickets_Details").child("Tour_Date").setValue(date);
+                          //  databaseReference.child(userName).child("Tickets_Details").child("Mode_Of_Travel").setValue();
 
                     }
                     @Override
@@ -216,7 +217,7 @@ public class TourDetail extends AppCompatActivity implements DatePickerDialog.On
 
         switch(view.getId()) {
             case R.id.bus_radio_btn:
-                pricePerMode = (1 * PRICE);
+                pricePerMode = (PRICE);
                     break;
             case R.id.train_radio_btn:
                 pricePerMode = (int)(0.5 * PRICE);

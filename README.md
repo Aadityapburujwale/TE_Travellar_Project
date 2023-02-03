@@ -1,2 +1,2 @@
-# TE_Travellar_Project
+# TE Travellar Project
 **TE IT Minor Project.**
